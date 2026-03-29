@@ -1,8 +1,10 @@
+"use client";
+
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, ChevronRight, ArrowRight } from 'lucide-react';
+import { X, ArrowRight } from 'lucide-react';
 import { CATEGORY_MAP } from '../data';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 interface CategoryOverlayProps {
   isOpen: boolean;
@@ -18,7 +20,7 @@ export const CategoryOverlay: React.FC<CategoryOverlayProps> = ({ isOpen, onClos
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-[100] bg-white/95 backdrop-blur-3xl overflow-y-auto"
+          className="fixed inset-0 z-[1000] bg-white/95 backdrop-blur-3xl overflow-y-auto"
           onClick={onClose}
         >
           <div 
@@ -48,7 +50,7 @@ export const CategoryOverlay: React.FC<CategoryOverlayProps> = ({ isOpen, onClos
                   className="space-y-8"
                 >
                   <Link
-                    to={`/search?category=${category.name}`}
+                    href={`/search?category=${category.name}`}
                     onClick={onClose}
                     className="group flex items-center justify-between border-b-2 border-gray-100 pb-4 hover:border-shop-yellow transition-colors"
                   >
@@ -63,7 +65,7 @@ export const CategoryOverlay: React.FC<CategoryOverlayProps> = ({ isOpen, onClos
                       {category.subcategories.map((sub) => (
                         <li key={sub}>
                           <Link
-                            to={`/search?category=${category.name}&sub=${sub}`}
+                            href={`/search?category=${category.name}&sub=${sub}`}
                             onClick={onClose}
                             className="text-gray-400 hover:text-shop-black transition-all duration-300 text-lg font-bold flex items-center gap-2 group/sub"
                           >
@@ -80,9 +82,9 @@ export const CategoryOverlay: React.FC<CategoryOverlayProps> = ({ isOpen, onClos
 
             <div className="mt-32 pt-16 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-8">
               <div className="flex gap-8">
-                <Link to="/search" onClick={onClose} className="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-shop-yellow transition-colors">New Arrivals</Link>
-                <Link to="/search" onClick={onClose} className="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-shop-yellow transition-colors">Best Sellers</Link>
-                <Link to="/search" onClick={onClose} className="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-shop-yellow transition-colors">Sale</Link>
+                <Link href="/search" onClick={onClose} className="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-shop-yellow transition-colors">New Arrivals</Link>
+                <Link href="/search" onClick={onClose} className="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-shop-yellow transition-colors">Best Sellers</Link>
+                <Link href="/search" onClick={onClose} className="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-shop-yellow transition-colors">Sale</Link>
               </div>
               <p className="text-gray-300 text-[10px] uppercase tracking-[0.4em] font-black">
                 StickerFlix Premium Collection &copy; 2026

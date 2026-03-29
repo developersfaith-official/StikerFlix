@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-cream: #F5F2ED;
+  --color-shop-yellow: #FACC15;
+  --color-shop-black: #1A1A1A;
+  --color-shop-gray: #F3F4F6;
+  --color-netflix-red: #e50914;
+  
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-cream text-shop-black antialiased overflow-x-hidden;
+  }
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

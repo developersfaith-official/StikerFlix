@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { MessageCircle } from 'lucide-react';
 import { WHATSAPP_PHONE_NUMBER } from '../constants';

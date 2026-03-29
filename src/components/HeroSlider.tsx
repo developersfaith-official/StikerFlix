@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Info, ShoppingCart, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Sticker } from '../data';
 
 interface HeroSliderProps {
@@ -19,6 +21,8 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ stickers }) => {
   }, [stickers.length]);
 
   const current = stickers[currentIndex];
+
+  if (!current) return null;
 
   return (
     <div className="relative h-[60vh] md:h-[75vh] w-full bg-[#FEF9C3]/30 overflow-hidden">
@@ -45,14 +49,14 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ stickers }) => {
               </p>
               <div className="flex flex-wrap gap-4 justify-center md:justify-start">
                 <Link
-                  to={`/sticker/${current.id}`}
+                  href={`/sticker/${current.id}`}
                   className="group flex items-center gap-3 bg-shop-black text-white px-8 py-4 rounded-full font-black uppercase text-xs tracking-widest hover:bg-shop-yellow transition-all shadow-xl shadow-black/10"
                 >
                   <ShoppingCart className="w-4 h-4" /> Shop Now
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
                 </Link>
                 <Link
-                  to={`/sticker/${current.id}`}
+                  href={`/sticker/${current.id}`}
                   className="flex items-center gap-3 bg-white text-shop-black px-8 py-4 rounded-full font-black uppercase text-xs tracking-widest hover:bg-gray-50 transition-all border border-gray-100"
                 >
                   <Info className="w-4 h-4" /> Details

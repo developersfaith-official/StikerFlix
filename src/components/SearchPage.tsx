@@ -1,14 +1,16 @@
-import React, { useState, useMemo, useEffect } from 'react';
+"use client";
+
+import React, { useState, useMemo, useEffect, Suspense } from 'react';
 import { STICKERS } from '../data';
-import { Link, useSearchParams } from 'react-router-dom';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { Search as SearchIcon, SlidersHorizontal, X, Check, Star, Plus, Filter } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { motion } from 'motion/react';
 
-export const SearchPage: React.FC = () => {
-  const [searchParams] = useSearchParams();
+const SearchContent = () => {
+  const searchParams = useSearchParams();
   const initialCategory = searchParams.get('category') || 'All';
-  const initialSub = searchParams.get('sub') || '';
 
   const [query, setQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
@@ -18,8 +20,9 @@ export const SearchPage: React.FC = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(true);
 
   useEffect(() => {
-    if (searchParams.get('category')) {
-      setSelectedCategory(searchParams.get('category')!);
+    const cat = searchParams.get('category');
+    if (cat) {
+      setSelectedCategory(cat);
       setIsFilterOpen(true);
     }
   }, [searchParams]);
@@ -40,7 +43,7 @@ export const SearchPage: React.FC = () => {
   }, [query, selectedCategory, maxPrice, showOnlyNew, showOnlyTrending]);
 
   return (
-    <div className="min-h-screen bg-cream pt-32 pb-20 px-4 md:px-12">
+    <div className="min-h-screen bg-cream pt-12 md:pt-20 pb-20 px-4 md:px-12">
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Search Header */}
         <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
@@ -195,7 +198,7 @@ export const SearchPage: React.FC = () => {
                     whileHover={{ y: -10 }}
                     className="bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 group/card"
                   >
-                    <Link to={`/sticker/${sticker.id}`} className="block relative aspect-square bg-gray-50 p-6 overflow-hidden">
+                    <Link href={`/sticker/${sticker.id}`} className="block relative aspect-square bg-gray-50 p-6 overflow-hidden">
                       <img
                         src={sticker.image}
                         alt={sticker.title}
@@ -217,7 +220,7 @@ export const SearchPage: React.FC = () => {
                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">4.5 (21k)</span>
                       </div>
                       
-                      <Link to={`/sticker/${sticker.id}`} className="block">
+                      <Link href={`/sticker/${sticker.id}`} className="block">
                         <h3 className="text-sm font-black text-shop-black truncate hover:text-shop-yellow transition-colors">{sticker.title}</h3>
                       </Link>
                       
@@ -256,5 +259,13 @@ export const SearchPage: React.FC = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+export const SearchPage = () => {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <SearchContent />
+    </Suspense>
   );
 };

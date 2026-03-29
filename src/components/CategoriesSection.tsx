@@ -1,5 +1,7 @@
+"use client";
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Laptop, Baby, Utensils, MoreHorizontal, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -19,7 +21,7 @@ export const CategoriesSection: React.FC = () => {
             <h2 className="text-4xl font-black uppercase tracking-tighter text-shop-black leading-none">First Time? <br/> <span className="text-shop-yellow">Start Explore!</span></h2>
             <p className="text-gray-400 font-bold uppercase text-xs tracking-[0.2em] mt-4">Explore popular categories!</p>
           </div>
-          <Link to="/search" className="group flex items-center gap-3 bg-white border border-gray-100 px-6 py-3 rounded-full font-black uppercase text-[10px] tracking-widest text-shop-black hover:bg-shop-yellow hover:text-white transition-all shadow-sm">
+          <Link href="/search" className="group flex items-center gap-3 bg-white border border-gray-100 px-6 py-3 rounded-full font-black uppercase text-[10px] tracking-widest text-shop-black hover:bg-shop-yellow hover:text-white transition-all shadow-sm">
             All Category <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>

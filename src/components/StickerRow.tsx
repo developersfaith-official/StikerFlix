@@ -1,9 +1,10 @@
+"use client";
+
 import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion } from 'motion/react';
-import { ChevronLeft, ChevronRight, Star, ShoppingCart, Plus } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star, Plus } from 'lucide-react';
 import { Sticker } from '../data';
-import { cn } from '../lib/utils';
 
 interface StickerRowProps {
   title: string;
@@ -40,7 +41,7 @@ export const StickerRow: React.FC<StickerRowProps> = ({ title, stickers }) => {
           </h2>
           <div className="h-1 w-12 bg-shop-yellow mt-1 rounded-full"></div>
         </div>
-        <Link to="/search" className="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-shop-yellow transition-colors">View All</Link>
+        <Link href="/search" className="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-shop-yellow transition-colors">View All</Link>
       </div>
       
       <div className="relative">
@@ -64,7 +65,7 @@ export const StickerRow: React.FC<StickerRowProps> = ({ title, stickers }) => {
               whileHover={{ y: -10 }}
               className="flex-none w-[220px] md:w-[280px] bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 group/card"
             >
-              <Link to={`/sticker/${sticker.id}`} className="block relative aspect-square bg-gray-50 p-6 overflow-hidden">
+              <Link href={`/sticker/${sticker.id}`} className="block relative aspect-square bg-gray-50 p-6 overflow-hidden">
                 <img
                   src={sticker.image}
                   alt={sticker.title}
@@ -82,7 +83,7 @@ export const StickerRow: React.FC<StickerRowProps> = ({ title, stickers }) => {
                   <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">4.5 (21k)</span>
                 </div>
                 
-                <Link to={`/sticker/${sticker.id}`} className="block">
+                <Link href={`/sticker/${sticker.id}`} className="block">
                   <h3 className="text-sm font-black text-shop-black truncate hover:text-shop-yellow transition-colors">{sticker.title}</h3>
                 </Link>
                 

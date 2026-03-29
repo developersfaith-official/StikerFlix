@@ -1,5 +1,8 @@
+"use client";
+
 import React from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { useParams, useRouter } from 'next/navigation';
 import { STICKERS } from '../data';
 import { MessageCircle, Star, ArrowLeft, Heart, Share2, ShieldCheck, Truck, RotateCcw } from 'lucide-react';
 import { motion } from 'motion/react';
@@ -8,8 +11,9 @@ import { cn } from '../lib/utils';
 import { StickerRow } from './StickerRow';
 
 export const StickerDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  const params = useParams();
+  const id = params?.id as string;
+  const router = useRouter();
   const sticker = STICKERS.find((s) => s.id === id);
 
   const relatedStickers = STICKERS.filter(
@@ -20,7 +24,7 @@ export const StickerDetail: React.FC = () => {
     return (
       <div className="h-screen flex flex-col items-center justify-center space-y-4 bg-cream">
         <h1 className="text-4xl font-black uppercase tracking-tighter text-shop-black">Sticker not found</h1>
-        <Link to="/" className="text-shop-yellow font-bold uppercase tracking-widest hover:underline">Go back home</Link>
+        <Link href="/" className="text-shop-yellow font-bold uppercase tracking-widest hover:underline">Go back home</Link>
       </div>
     );
   }
@@ -34,10 +38,10 @@ export const StickerDetail: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-cream pt-32 pb-20 px-4 md:px-12">
+    <div className="min-h-screen bg-cream pt-12 md:pt-20 pb-20 px-4 md:px-12">
       <div className="max-w-7xl mx-auto">
         <button 
-          onClick={() => navigate(-1)}
+          onClick={() => router.back()}
           className="flex items-center gap-2 text-gray-400 hover:text-shop-black mb-12 transition-all font-black uppercase text-xs tracking-widest group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Collection
