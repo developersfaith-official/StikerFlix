@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star, ShoppingCart, Plus } from 'lucide-react';
 import { Sticker } from '../data';
 import { cn } from '../lib/utils';
 
@@ -32,52 +32,76 @@ export const StickerRow: React.FC<StickerRowProps> = ({ title, stickers }) => {
   };
 
   return (
-    <div className="space-y-2 py-4 relative group">
-      <h2 className="text-xl md:text-2xl font-bold px-4 md:px-12 text-white/90">
-        {title}
-      </h2>
+    <div className="space-y-6 py-8 relative group max-w-7xl mx-auto">
+      <div className="flex justify-between items-end px-4 md:px-12">
+        <div>
+          <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-shop-black">
+            {title}
+          </h2>
+          <div className="h-1 w-12 bg-shop-yellow mt-1 rounded-full"></div>
+        </div>
+        <Link to="/search" className="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-shop-yellow transition-colors">View All</Link>
+      </div>
       
       <div className="relative">
         {showLeft && (
           <button
             onClick={() => scroll('left')}
-            className="absolute left-0 top-0 bottom-0 z-40 bg-black/50 hover:bg-black/70 px-2 transition-opacity opacity-0 group-hover:opacity-100 hidden md:block"
+            className="absolute -left-4 top-1/2 -translate-y-1/2 z-40 bg-white shadow-xl rounded-full p-3 hover:bg-shop-yellow hover:text-white transition-all opacity-0 group-hover:opacity-100 hidden md:block border border-gray-100"
           >
-            <ChevronLeft className="w-8 h-8" />
+            <ChevronLeft className="w-6 h-6" />
           </button>
         )}
 
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="flex gap-2 overflow-x-auto hide-scrollbar px-4 md:px-12 scroll-smooth"
+          className="flex gap-6 overflow-x-auto hide-scrollbar px-4 md:px-12 scroll-smooth py-4"
         >
           {stickers.map((sticker) => (
-            <Link
+            <motion.div
               key={sticker.id}
-              to={`/sticker/${sticker.id}`}
-              className="flex-none w-[160px] md:w-[280px] aspect-video relative rounded-md overflow-hidden transition-transform duration-300 hover:scale-105 hover:z-10"
+              whileHover={{ y: -10 }}
+              className="flex-none w-[220px] md:w-[280px] bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 group/card"
             >
-              <img
-                src={sticker.image}
-                alt={sticker.title}
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity flex flex-col justify-end p-3">
-                <p className="text-sm font-bold truncate">{sticker.title}</p>
-                <p className="text-xs text-netflix-red font-semibold">${sticker.price}</p>
+              <Link to={`/sticker/${sticker.id}`} className="block relative aspect-square bg-gray-50 p-6 overflow-hidden">
+                <img
+                  src={sticker.image}
+                  alt={sticker.title}
+                  className="w-full h-full object-contain group-hover/card:scale-110 transition-transform duration-700"
+                  referrerPolicy="no-referrer"
+                />
+                <button className="absolute bottom-4 right-4 w-10 h-10 bg-shop-yellow rounded-full flex items-center justify-center text-white shadow-lg shadow-shop-yellow/30 translate-y-12 group-hover/card:translate-y-0 transition-transform duration-500">
+                  <Plus className="w-6 h-6" />
+                </button>
+              </Link>
+              
+              <div className="p-6 space-y-3">
+                <div className="flex items-center gap-1">
+                  <Star className="w-3 h-3 fill-shop-yellow text-shop-yellow" />
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">4.5 (21k)</span>
+                </div>
+                
+                <Link to={`/sticker/${sticker.id}`} className="block">
+                  <h3 className="text-sm font-black text-shop-black truncate hover:text-shop-yellow transition-colors">{sticker.title}</h3>
+                </Link>
+                
+                <div className="flex items-center gap-3">
+                  <span className="text-lg font-black text-shop-black">${sticker.price}</span>
+                  <span className="text-xs font-bold text-gray-300 line-through">${(sticker.price * 1.2).toFixed(2)}</span>
+                  <span className="text-[10px] font-black text-green-500 uppercase tracking-widest">20% OFF</span>
+                </div>
               </div>
-            </Link>
+            </motion.div>
           ))}
         </div>
 
         {showRight && (
           <button
             onClick={() => scroll('right')}
-            className="absolute right-0 top-0 bottom-0 z-40 bg-black/50 hover:bg-black/70 px-2 transition-opacity opacity-0 group-hover:opacity-100 hidden md:block"
+            className="absolute -right-4 top-1/2 -translate-y-1/2 z-40 bg-white shadow-xl rounded-full p-3 hover:bg-shop-yellow hover:text-white transition-all opacity-0 group-hover:opacity-100 hidden md:block border border-gray-100"
           >
-            <ChevronRight className="w-8 h-8" />
+            <ChevronRight className="w-6 h-6" />
           </button>
         )}
       </div>

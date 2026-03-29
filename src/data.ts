@@ -148,6 +148,27 @@ export const STICKERS: Sticker[] = [
   }
 ];
 
+export interface CategoryStructure {
+  name: string;
+  subcategories?: string[];
+}
+
+export const CATEGORY_MAP: CategoryStructure[] = [
+  { 
+    name: "Sport", 
+    subcategories: ["Basketball", "Football", "Soccer", "Formula 1", "Michael Jordan", "NFL", "NHL", "Baseball", "Cycling", "Tennis", "Golf"] 
+  },
+  { 
+    name: "Super Heroes / Marvel", 
+    subcategories: ["Spider-Man", "X-Men", "Guardians of the Galaxy", "Teenage Mutant Ninja Turtles", "The Boys TV Series", "Superman", "Iron Man", "Hulk", "Captain America", "Thor", "Wolverine", "Wonder Woman", "Deadpool", "Aquaman", "Shazam"] 
+  },
+  { name: "DIY", subcategories: ["Tools", "Crafts", "Home Improvement"] },
+  { name: "Animal", subcategories: ["Cat", "Horse", "Dog", "Birds", "Wild"] },
+  { name: "Laptop", subcategories: ["Coding", "Gaming", "Minimalist"] },
+  { name: "Kitchen", subcategories: ["Food", "Cooking", "Coffee"] },
+  { name: "Kids", subcategories: ["Cartoons", "Toys", "Learning"] }
+];
+
 export const BLOG_POSTS: BlogPost[] = [
   {
     id: "b1",

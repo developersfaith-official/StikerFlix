@@ -1,16 +1,18 @@
 @import "tailwindcss";
 
 @theme {
+  --color-bg-cream: #F5F2ED;
+  --color-shop-yellow: #FACC15;
+  --color-shop-black: #1A1A1A;
+  --color-shop-gray: #F3F4F6;
   --color-netflix-red: #e50914;
-  --color-netflix-black: #141414;
-  --color-netflix-gray: #808080;
   
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
   body {
-    @apply bg-netflix-black text-white antialiased;
+    @apply bg-bg-cream text-shop-black antialiased;
   }
 }
 
