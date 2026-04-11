@@ -40,7 +40,7 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ stickers }) => {
                 Exclusive Collection
               </span>
               <h1 className="text-5xl md:text-7xl font-black text-shop-black leading-[0.9] tracking-tighter mb-6 uppercase">
-                {current.title.split(' ').map((word, i) => (
+                {current.Title.split(' ').map((word, i) => (
                   <span key={i} className={i % 2 === 1 ? "text-shop-yellow" : ""}>{word} </span>
                 ))}
               </h1>
@@ -79,7 +79,7 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ stickers }) => {
               <div className="absolute inset-0 bg-shop-yellow rounded-full blur-[100px] opacity-20 animate-pulse"></div>
               <img
                 src={current.image}
-                alt={current.title}
+                alt={current.Title}
                 className="w-full h-full object-contain relative z-10 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]"
                 referrerPolicy="no-referrer"
               />
