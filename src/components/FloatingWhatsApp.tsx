@@ -1,10 +1,20 @@
 "use client";
 
 import React from 'react';
+import { usePathname } from 'next/navigation';
 import { MessageCircle } from 'lucide-react';
 import { WHATSAPP_PHONE_NUMBER } from '../constants';
 
 export const FloatingWhatsApp: React.FC = () => {
+  const pathname = usePathname();
+  if (
+    pathname?.startsWith('/admin') ||
+    pathname === '/login' ||
+    pathname === '/signup'
+  ) {
+    return null;
+  }
+
   const message = "Hello! I'm interested in your stickers. Can you show me more designs?";
   const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
 

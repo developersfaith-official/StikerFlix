@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { getStickers, Sticker, CATEGORY_MAP, BLOG_POSTS } from '@/data';
+import { getStickers, Sticker, BLOG_POSTS } from '@/data';
 import { HeroSlider } from '@/components/HeroSlider';
 import { StickerRow } from '@/components/StickerRow';
 import { CategoriesSection } from '@/components/CategoriesSection';

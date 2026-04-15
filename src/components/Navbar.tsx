@@ -16,6 +16,15 @@ export const Navbar = () => {
   const { totalItems, hydrated } = useCart();
   const pathname = usePathname();
 
+  // Hide on admin + auth pages — they have their own layout/shell
+  if (
+    pathname?.startsWith("/admin") ||
+    pathname === "/login" ||
+    pathname === "/signup"
+  ) {
+    return null;
+  }
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);

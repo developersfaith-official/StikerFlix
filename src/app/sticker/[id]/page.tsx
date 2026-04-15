@@ -47,13 +47,6 @@ const PeopleAlsoSearched = dynamic(
     })),
   { ssr: false }
 );
-const RankingKeywords = dynamic(
-  () =>
-    import("@/components/RankingKeywords").then((mod) => ({
-      default: mod.RankingKeywords,
-    })),
-  { ssr: false }
-);
 
 // ── Mock data helpers (replace when Supabase columns exist) ────────────
 const MOCK_FEATURES = [
@@ -664,13 +657,8 @@ export default function StickerDetailPage({
         </div>
 
         {/* ── Phase 2: People Also Searched ────────────────────────── */}
-        <div className="mt-16 pt-12 border-t border-gray-100">
-          <PeopleAlsoSearched />
-        </div>
-
-        {/* ── Phase 2: Ranking Keywords ───────────────────────────── */}
         <div className="mt-16 pt-12 border-t border-gray-100 pb-8">
-          <RankingKeywords />
+          <PeopleAlsoSearched />
         </div>
       </div>
 

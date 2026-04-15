@@ -2,9 +2,19 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ShoppingBasket, Instagram, Youtube, Share2, MessageCircle } from 'lucide-react';
 
 export const Footer = () => {
+  const pathname = usePathname();
+  // Hide on admin + auth pages
+  if (
+    pathname?.startsWith('/admin') ||
+    pathname === '/login' ||
+    pathname === '/signup'
+  ) {
+    return null;
+  }
   return (
     <footer className="bg-white border-t border-gray-100 py-12 md:py-20 px-4 md:px-12">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 mb-16">

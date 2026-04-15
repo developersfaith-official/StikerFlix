@@ -31,12 +31,12 @@ const SearchContent = () => {
 
   const filteredStickers = useMemo(() => {
     return STICKERS.filter(sticker => {
-      const matchesQuery = sticker.title.toLowerCase().includes(query.toLowerCase()) || 
+      const matchesQuery = sticker.Title.toLowerCase().includes(query.toLowerCase()) || 
                            sticker.description.toLowerCase().includes(query.toLowerCase());
       const matchesCategory = selectedCategory === 'All' || sticker.category === selectedCategory;
       const matchesPrice = sticker.price <= maxPrice;
       const matchesNew = !showOnlyNew || sticker.isNew;
-      const matchesTrending = !showOnlyTrending || sticker.isTrending;
+      const matchesTrending = !showOnlyTrending || sticker.isTreanding;
 
       return matchesQuery && matchesCategory && matchesPrice && matchesNew && matchesTrending;
     });
@@ -201,7 +201,7 @@ const SearchContent = () => {
                     <Link href={`/sticker/${sticker.id}`} className="block relative aspect-square bg-gray-50 p-6 overflow-hidden">
                       <img
                         src={sticker.image}
-                        alt={sticker.title}
+                        alt={sticker.Title}
                         className="w-full h-full object-contain group-hover/card:scale-110 transition-transform duration-700"
                         referrerPolicy="no-referrer"
                       />
@@ -210,7 +210,7 @@ const SearchContent = () => {
                       </button>
                       <div className="absolute top-4 left-4 flex flex-col gap-2">
                         {sticker.isNew && <span className="bg-shop-yellow text-white text-[8px] font-black px-3 py-1 rounded-full uppercase tracking-widest">NEW</span>}
-                        {sticker.isTrending && <span className="bg-shop-black text-white text-[8px] font-black px-3 py-1 rounded-full uppercase tracking-widest">HOT</span>}
+                        {sticker.isTreanding && <span className="bg-shop-black text-white text-[8px] font-black px-3 py-1 rounded-full uppercase tracking-widest">HOT</span>}
                       </div>
                     </Link>
                     
@@ -221,7 +221,7 @@ const SearchContent = () => {
                       </div>
                       
                       <Link href={`/sticker/${sticker.id}`} className="block">
-                        <h3 className="text-sm font-black text-shop-black truncate hover:text-shop-yellow transition-colors">{sticker.title}</h3>
+                        <h3 className="text-sm font-black text-shop-black truncate hover:text-shop-yellow transition-colors">{sticker.Title}</h3>
                       </Link>
                       
                       <div className="flex items-center gap-3">

@@ -218,7 +218,7 @@ export default function CartPage() {
                   >
                     <img
                       src={item.sticker.image}
-                      alt={item.sticker.title}
+                      alt={item.sticker.Title}
                       className="w-full h-full object-contain"
                       referrerPolicy="no-referrer"
                     />
@@ -232,7 +232,7 @@ export default function CartPage() {
                         </span>
                         <Link href={`/sticker/${item.sticker.id}`}>
                           <h3 className="text-base md:text-lg font-black uppercase tracking-tight text-shop-black truncate hover:text-shop-yellow transition-colors">
-                            {item.sticker.title}
+                            {item.sticker.Title}
                           </h3>
                         </Link>
                         <p className="text-xs text-gray-400 font-bold mt-1">
