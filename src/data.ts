@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase'
+import { number } from 'motion'
 
 export interface Sticker {
   id: number
@@ -10,6 +11,7 @@ export interface Sticker {
   isNew: boolean
   isTreanding: boolean
   createdAt: string
+  remarks: Array<string>
 }
 
 export interface BlogPost {
@@ -77,3 +79,36 @@ export const BLOG_POSTS: BlogPost[] = [
     image: "https://picsum.photos/seed/blog2/800/400"
   }
 ]
+
+export interface FAQ {
+  id: number
+  product_id: number
+  question: string
+  answer: string
+  category: string
+  helpful_count: number
+  views_count: number
+  created_at: string
+}
+
+export interface Review {
+  id: number
+  product_id: number
+  rating: number
+  title: string
+  text: string
+  author_name: string
+  verified_purchase: boolean
+  helpful_count: number
+  unhelpful_count: number
+  created_at: string
+}
+
+export interface SEOKeywords {
+  id: number
+  keyword: string
+  search_volume: number
+  difficulty: number
+  category: string
+  created_at: string
+}

@@ -7,12 +7,13 @@ import { Search, Bell, User, Menu, X, ShoppingBasket, ChevronDown, Phone, Messag
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'motion/react';
 import { CategoryOverlay } from './CategoryOverlay';
+import { useCart } from '@/hooks/useCart';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
-  const [pinnedCount, setPinnedCount] = useState(3);
+  const { totalItems, hydrated } = useCart();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -91,14 +92,18 @@ export const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-3 md:gap-4">
-              <button className="relative group p-2 bg-gray-100 rounded-full hover:bg-shop-yellow transition-all">
+              <Link
+                href="/cart"
+                aria-label="View cart"
+                className="relative group p-2 bg-gray-100 rounded-full hover:bg-shop-yellow transition-all"
+              >
                 <ShoppingBasket className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors" />
-                {pinnedCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-shop-yellow text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border-2 border-white">
-                    {pinnedCount}
+                {hydrated && totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-shop-yellow text-white text-[9px] font-black min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center border-2 border-white">
+                    {totalItems > 99 ? '99+' : totalItems}
                   </span>
                 )}
-              </button>
+              </Link>
 
               <button className="hidden sm:flex items-center gap-2 font-bold text-sm text-shop-black hover:text-shop-yellow transition-colors">
                 <User className="w-5 h-5" /> <span className="hidden md:inline">Sign In</span>

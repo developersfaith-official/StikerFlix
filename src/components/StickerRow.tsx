@@ -3,8 +3,10 @@
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import { motion } from 'motion/react';
-import { ChevronLeft, ChevronRight, Star, Plus } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star, Plus, Check } from 'lucide-react';
 import { Sticker } from '../data';
+import { useCart } from '@/hooks/useCart';
+import { cn } from '@/lib/utils';
 
 interface StickerRowProps {
   title: string;
@@ -15,6 +17,16 @@ export const StickerRow: React.FC<StickerRowProps> = ({ title, stickers }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(true);
+  const [justAddedId, setJustAddedId] = useState<number | null>(null);
+  const { addToCart } = useCart();
+
+  const handleQuickAdd = (e: React.MouseEvent, sticker: Sticker) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(Number(sticker.id));
+    setJustAddedId(Number(sticker.id));
+    setTimeout(() => setJustAddedId((cur) => (cur === Number(sticker.id) ? null : cur)), 1200);
+  };
 
   const handleScroll = () => {
     if (scrollRef.current) {
@@ -68,29 +80,64 @@ export const StickerRow: React.FC<StickerRowProps> = ({ title, stickers }) => {
               <Link href={`/sticker/${sticker.id}`} className="block relative aspect-square bg-gray-50 p-6 overflow-hidden">
                 <img
                   src={sticker.image}
-                  alt={sticker.title}
+                  alt={sticker.Title}
                   className="w-full h-full object-contain group-hover/card:scale-110 transition-transform duration-700"
                   referrerPolicy="no-referrer"
                 />
-                <button className="absolute bottom-4 right-4 w-10 h-10 bg-shop-yellow rounded-full flex items-center justify-center text-white shadow-lg shadow-shop-yellow/30 translate-y-12 group-hover/card:translate-y-0 transition-transform duration-500">
-                  <Plus className="w-6 h-6" />
-                </button>
               </Link>
-              
-              <div className="p-6 space-y-3">
-                <div className="flex items-center gap-1">
-                  <Star className="w-3 h-3 fill-shop-yellow text-shop-yellow" />
-                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">4.5 (21k)</span>
-                </div>
-                
+
+              <div className="p-5 space-y-3">
+                {/* Row 1 — Title */}
                 <Link href={`/sticker/${sticker.id}`} className="block">
-                  <h3 className="text-sm font-black text-shop-black truncate hover:text-shop-yellow transition-colors">{sticker.title}</h3>
+                  <h3 className="text-sm font-black text-shop-black leading-snug line-clamp-2 min-h-[2.5rem] hover:text-shop-yellow transition-colors">
+                    {sticker.Title}
+                  </h3>
                 </Link>
-                
-                <div className="flex items-center gap-3">
-                  <span className="text-lg font-black text-shop-black">${sticker.price}</span>
-                  <span className="text-xs font-bold text-gray-300 line-through">${(sticker.price * 1.2).toFixed(2)}</span>
-                  <span className="text-[10px] font-black text-green-500 uppercase tracking-widest">20% OFF</span>
+
+                {/* Row 2 — Pricing + sold + discount + add button */}
+                <div className="flex items-center gap-2">
+                  <span className="text-lg font-black text-shop-black leading-none">
+                    ${sticker.price}
+                  </span>
+                  <span className="text-xs font-bold text-gray-300 line-through leading-none">
+                    ${(sticker.price * 1.2).toFixed(0)}
+                  </span>
+                  <span className="text-[10px] font-medium text-gray-400 leading-none whitespace-nowrap">
+                    {((Number(sticker.id) % 9) + 1) * 100}+ sold
+                  </span>
+                  <span className="text-[9px] font-black uppercase tracking-wider text-shop-yellow border border-shop-yellow rounded px-1.5 py-0.5 leading-none">
+                    -20%
+                  </span>
+                  <button
+                    type="button"
+                    aria-label="Add to cart"
+                    onClick={(e) => handleQuickAdd(e, sticker)}
+                    className="ml-auto shrink-0 w-8 h-8 rounded-full bg-shop-black text-white flex items-center justify-center hover:bg-shop-yellow hover:scale-110 active:scale-95 transition-all shadow-md"
+                  >
+                    {justAddedId === Number(sticker.id) ? (
+                      <Check className="w-4 h-4" />
+                    ) : (
+                      <Plus className="w-4 h-4" />
+                    )}
+                  </button>
+                </div>
+
+                {/* Row 3 — Rating */}
+                <div className="flex items-center gap-1">
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <Star
+                      key={i}
+                      className={cn(
+                        'w-3 h-3',
+                        i < 4
+                          ? 'fill-shop-yellow text-shop-yellow'
+                          : 'fill-shop-yellow/50 text-shop-yellow/50'
+                      )}
+                    />
+                  ))}
+                  <span className="text-[10px] font-bold text-gray-400 ml-1">
+                    (287)
+                  </span>
                 </div>
               </div>
             </motion.div>

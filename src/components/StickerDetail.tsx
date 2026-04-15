@@ -1,20 +1,23 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { STICKERS } from '../data';
-import { MessageCircle, Star, ArrowLeft, Heart, Share2, ShieldCheck, Truck, RotateCcw } from 'lucide-react';
+import { MessageCircle, Star, ArrowLeft, Heart, Share2, ShieldCheck, Truck, RotateCcw, Check } from 'lucide-react';
 import { motion } from 'motion/react';
 import { WHATSAPP_PHONE_NUMBER, WHATSAPP_MESSAGE_TEMPLATE } from '../constants';
 import { cn } from '../lib/utils';
 import { StickerRow } from './StickerRow';
+import { useCart } from '@/hooks/useCart';
 
 export const StickerDetail: React.FC = () => {
   const params = useParams();
   const id = params?.id as string;
   const router = useRouter();
-  const sticker = STICKERS.find((s) => s.id === id);
+  const sticker = STICKERS.find((s) => s.id === Number(id));
+  const { addToCart, isInCart } = useCart();
+  const [justAdded, setJustAdded] = useState(false);
 
   const relatedStickers = STICKERS.filter(
     (s) => s.category === sticker?.category && s.id !== sticker?.id
@@ -29,9 +32,16 @@ export const StickerDetail: React.FC = () => {
     );
   }
 
+  const handleAddToCart = () => {
+    if (!sticker) return;
+    addToCart(Number(sticker.id));
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1800);
+  };
+
   const handleWhatsAppOrder = () => {
     const message = WHATSAPP_MESSAGE_TEMPLATE
-      .replace('{title}', sticker.title)
+      .replace('{title}', sticker.Title)
       .replace('{price}', sticker.price.toString());
     const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
@@ -63,7 +73,7 @@ export const StickerDetail: React.FC = () => {
             </div>
             <img
               src={sticker.image}
-              alt={sticker.title}
+              alt={sticker.Title}
               className="w-full aspect-square object-contain group-hover:scale-105 transition-transform duration-700"
               referrerPolicy="no-referrer"
             />
@@ -80,7 +90,7 @@ export const StickerDetail: React.FC = () => {
                   <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">4.8 (120 Reviews)</span>
                 </div>
               </div>
-              <h1 className="text-5xl md:text-6xl font-black uppercase tracking-tighter text-shop-black leading-none">{sticker.title}</h1>
+              <h1 className="text-5xl md:text-6xl font-black uppercase tracking-tighter text-shop-black leading-none">{sticker.Title}</h1>
               <div className="flex items-center gap-4">
                 <p className="text-4xl font-black text-shop-black">${sticker.price}</p>
                 <p className="text-xl font-bold text-gray-300 line-through">${(sticker.price * 1.2).toFixed(2)}</p>
@@ -100,9 +110,18 @@ export const StickerDetail: React.FC = () => {
                 <MessageCircle className="w-5 h-5" /> Order via WhatsApp
               </button>
               <button
+                onClick={handleAddToCart}
                 className="flex items-center justify-center gap-3 bg-shop-black text-white px-8 py-5 rounded-full font-black uppercase text-xs tracking-widest hover:bg-shop-yellow transition-all shadow-xl shadow-black/10"
               >
-                Add to Cart
+                {justAdded ? (
+                  <>
+                    <Check className="w-5 h-5" /> Added to Cart
+                  </>
+                ) : isInCart(Number(sticker.id)) ? (
+                  'Add Another'
+                ) : (
+                  'Add to Cart'
+                )}
               </button>
             </div>
 
@@ -132,7 +151,7 @@ export const StickerDetail: React.FC = () => {
               
               {sticker.remarks.length > 0 ? (
                 <div className="grid gap-4">
-                  {sticker.remarks.map((remark, idx) => (
+                  {sticker.remarks.map((remark: any, idx :any) => (
                     <motion.div 
                       key={idx} 
                       initial={{ opacity: 0, y: 10 }}
